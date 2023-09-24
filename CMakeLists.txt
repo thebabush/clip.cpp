@@ -63,7 +63,13 @@ option(CLIP_OPENBLAS               "CLIP: use OpenBLAS"                         
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 set(CMAKE_C_STANDARD_REQUIRED true)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
+
+find_package(Threads)
+if (Threads_FOUND)
+    message(STATUS "pthreads found.")
+else()
+    find_package(PThreads4W REQUIRED)
+endif()
 
 if (NOT MSVC)
     if (CLIP_SANITIZE_THREAD)
